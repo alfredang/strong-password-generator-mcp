@@ -1,0 +1,20 @@
+[project]
+name = "password-generator-mcp"
+version = "1.0.0"
+description = "MCP server for generating strong, customizable passwords"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=1.0.0",
+]
+
+[project.scripts]
+password-generator-mcp = "server:mcp.run"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+only-include = ["server.py"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
