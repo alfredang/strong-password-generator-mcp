@@ -20,14 +20,15 @@ A Model Context Protocol (MCP) server for generating cryptographically secure, c
 | `check_password_strength` | Analyze the security of any password |
 | `generate_passphrase` | Create memorable word-based passphrases |
 
-## Installation
+## Installation for Claude Desktop
 
-### Prerequisites
+### Step 1: Install uv (if not installed)
 
-- Python 3.10+
-- [uv](https://github.com/astral-sh/uv) package manager
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
 
-### Setup
+### Step 2: Clone and sync dependencies
 
 ```bash
 git clone https://github.com/alfredang/strong-password-generator.git
@@ -35,9 +36,21 @@ cd strong-password-generator
 uv sync
 ```
 
-### Configure Claude Desktop
+### Step 3: Configure Claude Desktop
 
-Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+Open the Claude Desktop config file:
+
+**macOS:**
+```bash
+code ~/Library/Application\ Support/Claude/claude_desktop_config.json
+```
+
+**Windows:**
+```
+%APPDATA%\Claude\claude_desktop_config.json
+```
+
+Add this MCP server configuration:
 
 ```json
 {
@@ -56,7 +69,28 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
 }
 ```
 
-Restart Claude Desktop to load the server.
+> **Note:** Replace `/path/to/strong-password-generator` with the actual path where you cloned the repo.
+
+### Step 4: Restart Claude Desktop
+
+Completely quit Claude Desktop and reopen it. The password generator tools will now be available.
+
+### Step 5: Verify Installation
+
+In Claude Desktop, you can ask:
+
+- "Generate a strong 20-character password"
+- "Create 5 passwords without symbols"
+- "Check the strength of my password: abc123"
+- "Generate a memorable passphrase"
+
+### Testing with MCP Inspector (Optional)
+
+```bash
+npx @modelcontextprotocol/inspector uv --directory /path/to/strong-password-generator run python server.py
+```
+
+This opens a web UI to test tools interactively.
 
 ## Usage Examples
 
@@ -79,14 +113,6 @@ Once installed, you can ask Claude:
 | `case` | string | "mixed" | "mixed", "uppercase", or "lowercase" |
 | `exclude_ambiguous` | bool | false | Remove `0`, `O`, `l`, `1`, `I` |
 | `custom_symbols` | string | null | Custom symbol set to use |
-
-## Testing
-
-Test with MCP Inspector:
-
-```bash
-npx @modelcontextprotocol/inspector uv --directory . run python server.py
-```
 
 ## License
 
